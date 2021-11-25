@@ -13,8 +13,7 @@ namespace StringMaker_Martin
             Console.WriteLine(sm.Symmetric("ABBA"));
             Console.WriteLine(sm.Symmetric("ABA"));
             Console.WriteLine(sm.Symmetric("ABba"));
-
-
+            Console.ReadLine();
 
         }
     }

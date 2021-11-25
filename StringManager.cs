@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace StringMaker_Martin
@@ -47,7 +48,59 @@ namespace StringMaker_Martin
             {
                 ASCII += (int)c;
             }
-            return ASCII.ToString();
+
+            //Need to fix this and find a way to split the int into an array
+            int[] ASCIIArr = ASCII.ToString().ToCharArray().Select(Convert.ToInt32).ToArray();
+
+
+            string[] numWords = new string [ASCIIArr.Length];
+
+            for(int i = 0; i < ASCIIArr.Length; i++)
+            {
+                Console.WriteLine(ASCIIArr[i]);
+                numWords[i] = numberSwitch(ASCIIArr[i]);
+            }
+
+            string words = string.Join(" ", numWords);
+            
+            return words;
+        }
+
+        // Case will check the value of the number being inputed and returns the string value of the number
+        public string numberSwitch(int number)
+        {
+            string num = "";
+            switch (number)
+            {
+                case 1:
+                    num = "One";
+                    break;
+                case 2:
+                    num = "Two";
+                    break;
+                case 3:
+                    num = "Three";
+                    break;
+                case 4:
+                    num = "Four";
+                    break;
+                case 5:
+                    num = "Five";
+                    break;
+                case 6:
+                    num = "Six";
+                    break;
+                case 7:
+                    num = "Seven";
+                    break;
+                case 8:
+                    num = "Eight";
+                    break;
+                case 9:
+                    num = "Nine";
+                    break;
+            }
+            return num;
         }
 
         public override bool Equals(object obj)
