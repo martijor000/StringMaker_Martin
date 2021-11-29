@@ -1,35 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace StringMaker_Martin
 {
     class StringManager
     {
-        Stack<char> stringStack = new Stack<char>();
+        private Stack<char> stringStack = new Stack<char>();
+        private string _overString;
+        private int _ASCII = 0;
+        private string _results = "";
+        private string num = "";
 
-
-        public StringManager()
+        public StringManager() : this("")
         {
-            
+
         }
 
-        public string Reverse(string s)
+        public StringManager(string overString)
         {
-            char[] test = s.ToCharArray();
-            return StackString(test);
+            _overString = overString;
         }
 
-        public string Reverse(string s, bool b)
+        public string Reverse(string reverseString)
         {
-            char[] test = s.ToCharArray();
-            return StackString(test);
+            return StackString(reverseString.ToCharArray());
+        }
+
+        public string Reverse(string reverseString, bool keepCap)
+        {
+            return CapitalizeString(CapitalIndex(reverseString.ToCharArray()), StackString(reverseString.ToCharArray()).ToLower().ToCharArray());
         }
 
         public bool Symmetric(string s)
         {
-            if(s == Reverse(s))
+            if (s == Reverse(s))
             {
                 return true;
             }
@@ -41,62 +45,55 @@ namespace StringMaker_Martin
 
         public override string ToString()
         {
-            string test = "Dan";
-            int ASCII = 0;
-
-            foreach(char c in test)
+            if(_overString == "")
             {
-                ASCII += (int)c;
+                return "Negative One";
             }
 
-            //Need to fix this and find a way to split the int into an array
-            int[] ASCIIArr = ASCII.ToString().ToCharArray().Select(Convert.ToInt32).ToArray();
-
-
-            string[] numWords = new string [ASCIIArr.Length];
-
-            for(int i = 0; i < ASCIIArr.Length; i++)
+            foreach (char c in _overString)
             {
-                Console.WriteLine(ASCIIArr[i]);
-                numWords[i] = numberSwitch(ASCIIArr[i]);
+                _ASCII += (int)c;
             }
 
-            string words = string.Join(" ", numWords);
-            
-            return words;
+            for (int i = 0; i < _ASCII.ToString().ToCharArray().Length; i++)
+            {
+                _results += numberSwitch(_ASCII.ToString().ToCharArray()[i].ToString()) + " ";
+            }
+            return _results;
         }
 
-        // Case will check the value of the number being inputed and returns the string value of the number
-        public string numberSwitch(int number)
+        private string numberSwitch(string number)
         {
-            string num = "";
             switch (number)
             {
-                case 1:
+                case "0":
+                    num = "Zero";
+                    break;
+                case "1":
                     num = "One";
                     break;
-                case 2:
+                case "2":
                     num = "Two";
                     break;
-                case 3:
+                case "3":
                     num = "Three";
                     break;
-                case 4:
+                case "4":
                     num = "Four";
                     break;
-                case 5:
+                case "5":
                     num = "Five";
                     break;
-                case 6:
+                case "6":
                     num = "Six";
                     break;
-                case 7:
+                case "7":
                     num = "Seven";
                     break;
-                case 8:
+                case "8":
                     num = "Eight";
                     break;
-                case 9:
+                case "9":
                     num = "Nine";
                     break;
             }
@@ -105,9 +102,16 @@ namespace StringMaker_Martin
 
         public override bool Equals(object obj)
         {
-            if(obj is string)
+            if (obj is string)
             {
-                return true;
+                if(obj.ToString() == _overString)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
             {
@@ -132,17 +136,33 @@ namespace StringMaker_Martin
             return stri;
         }
 
-        private string CapitalizeString(string cap)
+        private int [] CapitalIndex(char[] charArray)
         {
-            char[] charA = cap.ToLower().ToCharArray();
-            for (int i = 0; i < charA.Length; i++)
+             int[] upperIndexes = new int [charArray.Length];
+
+            for(int i=0; i < charArray.Length; i++)
             {
-                if(charA[i] == 0)
+                if (Char.IsUpper(charArray[i]))
                 {
-                    charA[i] = charA[i];
+                    upperIndexes[i] = 1;
                 }
             }
-                return "";
+            return upperIndexes;
+        }
+
+        private string CapitalizeString(int[] capIndex, char[] capitalize)
+        {
+            for (int i = 0; i < capIndex.Length; i++)
+            {
+                if (capIndex[i] == 1)
+                {
+                    capitalize[i] = Convert.ToChar(capitalize[i].ToString().ToUpper());
+                }
+            }
+
+            string stri = new string(capitalize);
+
+            return stri;
         }
     }
 }
